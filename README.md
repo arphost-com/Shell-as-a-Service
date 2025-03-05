@@ -1,7 +1,6 @@
-# shell-as-a-service
-Shell commands run as a service in WHMCS
+# Shell as a Service Version 1 by ARPHost
 
-Shell as a Service Version 1 by ARPHost
+Shell commands run as a service in WHMCS
 
 1. Extact shellasaservice-1.0.zip to shellaservice.
 
