@@ -1,6 +1,7 @@
-# Shell as a Service Version 1 by ARPHost
-
-# This is an old addon we made you can get a free license by registering on our website or you can remove the license code...
+# Shell as a Service Version 1
+# The module is not currently working it was for php 7.4 and an old version of PHP needs updating.
+# If you have an old version of php like 7.4 and an old version of whmcs get a license here if you need it.
+https://arphost.com/index.php/store/whmcs-addons/shell-as-a-service
 
 Shell commands run as a service in WHMCS
 
