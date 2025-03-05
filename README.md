@@ -1,6 +1,6 @@
 # Shell as a Service Version 1 by ARPHost
 
-# This is an old addon we made you can get a free license by registering on our website our or you can remove the license code...
+# This is an old addon we made you can get a free license by registering on our website or you can remove the license code...
 
 Shell commands run as a service in WHMCS
 
