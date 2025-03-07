@@ -1,77 +1,49 @@
 <?php
-use Illuminate\Database\Capsule\Manager as Capsule;
-
 if (!defined("WHMCS")) {
     die("This file cannot be accessed directly");
 }
+use Illuminate\Database\Capsule\Manager as Capsule;
 
-function shellasaservice_MetaData() {
+function shellasaservice_MetaData()
+{
     return array(
         'DisplayName' => 'Shellasaservice',
         'APIVersion' => '1.1',
-        'RequiresServer' => false,
-        'Type' => 'addon'
     );
 }
 
-function shellasaservice_config() {
-    return [
-        'name' => 'Shell as a Service',
-        'description' => '',
-        'version' => '1.1',
-        'author' => 'ARPHost & TheRaiwy',
-        'fields' => [
-            'createbash' => [
-                'FriendlyName' => 'Create Script',
-                'Type' => 'text',
-                'Size' => '50',
-                'Default' => ''
-            ],
-            'suspendbash' => [
-                'FriendlyName' => 'Suspend Script',
-                'Type' => 'text',
-                'Size' => '50',
-                'Default' => ''
-            ],
-            'unsuspendbash' => [
-                'FriendlyName' => 'Unsuspend Script',
-                'Type' => 'text',
-                'Size' => '50',
-                'Default' => ''
-            ],
-            'terminatebash' => [
-                'FriendlyName' => 'Terminate Script',
-                'Type' => 'text',
-                'Size' => '50',
-                'Default' => ''
-            ]
-        ]
-    ];
-}
 
-function shellasaservice_activate() {
-    try {
-        add_hook('ServiceCreate', 1, 'shellasaservice_CreateAccount');
-        add_hook('ServiceSuspend', 1, 'shellasaservice_SuspendAccount');
-        add_hook('ServiceUnsuspend', 1, 'shellasaservice_UnsuspendAccount');
-        add_hook('ServiceTerminate', 1, 'shellasaservice_TerminateAccount');
-        
-        return [
-            'status' => 'success',
-            'description' => 'Module activated successfully'
-        ];
-    } catch (Exception $e) {
-        return [
-            'status' => 'error',
-            'description' => 'Activation failed: ' . $e->getMessage()
-        ];
-    }
-}
-
-function shellasaservice_deactivate() {
+function shellasaservice_ConfigOptions()
+{
     return [
-        'status' => 'success',
-        'description' => 'Module deactivated successfully'
+        "createbash" => [
+            "FriendlyName" => "createbash",
+            "Type" => "text", # Text Box
+            "Size" => "25", # Defines the Field Width
+            "Description" => "",
+            "Default" => "",
+        ],
+        "suspendbash" => [
+            "FriendlyName" => "suspendbash",
+            "Type" => "text", # Text Box
+            "Size" => "25", # Defines the Field Width
+            "Description" => "",
+            "Default" => "",
+        ],
+        "unsuspendbash" => [
+            "FriendlyName" => "unsuspendbash",
+            "Type" => "text", # Text Box
+            "Size" => "25", # Defines the Field Width
+            "Description" => "",
+            "Default" => "",
+        ],
+        "terminatebash" => [
+            "FriendlyName" => "terminatebash",
+            "Type" => "text", # Text Box
+            "Size" => "25", # Defines the Field Width
+            "Description" => "",
+            "Default" => "",
+        ],
     ];
 }
 
@@ -235,97 +207,117 @@ function check_license($licensekey, $localkey='') {
     unset($postfields,$data,$matches,$whmcsurl,$licensing_secret_key,$checkdate,$usersip,$localkeydays,$allowcheckfaildays,$md5hash);
     return $results;
 }
+function shellasaservice_CreateAccount(array $params)
+{
+    try {
 
-function shellasaservice_validateLicense() {
-    $licensekey = "LIC11fae7ea42acaf127b600a2eb7f25d3d72189c5abba3f71e769733268dc97921a11a6ac07440a14a859742f6d0feb08f49ba63ec3985e3a3136aa3b9abf3d0f44a770a5463c363e936139a34f681a76318a062871c860bf4c6c179eb9cffb3778da3c6ad1f4978fb56fc439186d2606b6d39d19a5e31913d90e3b5cf7e34e54b3c5e9c9b9d97cc5d479e8a0c7bd993d92437fced2b93cf1bd2a89c4b053365a92c02562e8da6655da083984807a8ba692e100392c61d47a4ce5b6667083a3be04d5128974c391dd09a7248a8fd015ffecee735574b4624e14e40419eec489b790eebadcbb207461947d8317e5a57a416"; // Ваш лицензионный ключ
-    $localkey = Capsule::table('tbladdonmodules')
-        ->where('module', 'shellasaservice')
-        ->where('setting', 'localkey')
-        ->value('value');
+        $licensekey="LIC11fae7ea42acaf127b600a2eb7f25d3d72189c5abba3f71e769733268dc97921a11a6ac07440a14a859742f6d0feb08f49ba63ec3985e3a3136aa3b9abf3d0f44a770a5463c363e936139a34f681a76318a062871c860bf4c6c179eb9cffb3778da3c6ad1f4978fb56fc439186d2606b6d39d19a5e31913d90e3b5cf7e34e54b3c5e9c9b9d97cc5d479e8a0c7bd993d92437fced2b93cf1bd2a89c4b053365a92c02562e8da6655da083984807a8ba692e100392c61d47a4ce5b6667083a3be04d5128974c391dd09a7248a8fd015ffecee735574b4624e14e40419eec489b790eebadcbb207461947d8317e5a57a416";
 
-    $results = check_license($licensekey, $localkey);
+        $localkey = '9tjIxIzNwgDMwIjI6gjOztjIlRXYkt2Ylh2YioTO6M3OicmbpNnblNWasx1cyVmdyV2ccNXZsVHZv1GX
+zNWbodHXlNmc192czNWbodHXzN2bkRHacBFUNFEWcNHduVWb1N2bExFd0FWTcNnclNXVcpzQioDM4ozc
+7ISey9GdjVmcpRGZpxWY2JiO0EjOztjIx4CMuAjL3ITMioTO6M3OiAXaklGbhZnI6cjOztjI0N3boxWY
+j9Gbuc3d3xCdz9GasF2YvxmI6MjM6M3Oi4Wah12bkRWasFmdioTMxozc7ISeshGdu9WTiozN6M3OiUGb
+jl3Yn5WasxWaiJiOyEjOztjI3ATL4ATL4ADMyIiOwEjOztjIlRXYkVWdkRHel5mI6ETM6M3OicDMtcDM
+tgDMwIjI6ATM6M3OiUGdhR2ZlJnI6cjOztjIlNXYlxEI5xGa052bNByUD1ESXJiO5EjOztjIl1WYuR3Y
+1R2byBnI6ETM6M3OicjI6EjOztjIklGdjVHZvJHcioTO6M3Oi02bj5ycj1Ga3BEd0FWbioDNxozc7ICb
+pFWblJiO1ozc7IyUD1ESXBCd0FWTioDMxozc7ISZtFmbkVmclR3cpdWZyJiO0EjOztjIlZXa0NWQiojN
+6M3OiMXd0FGdzJiO2ozc7pjMxoTY8baca0885830a33725148e94e693f3f073294c0558d38e31f844
+c5e399e3c16a';
 
-    switch ($results['status']) {
-        case "Active":
-            if (!empty($results['localkey'])) {
-                Capsule::table('tbladdonmodules')->updateOrInsert(
-                    ['module' => 'shellasaservice', 'setting' => 'localkey'],
-                    ['value' => $results['localkey']]
-                );
+            $results = check_license($licensekey, $localkey);
+print_r($results); exit;
+            switch ($results['status']) {
+                case "Active":
+                    // get new local key and save it somewhere
+                    $localkeydata = $results['localkey'];
+                    break;
+                case "Invalid":
+                    die("License key is Invalid");
+                    break;
+                case "Expired":
+                    die("License key is Expired");
+                    break;
+                case "Suspended":
+                    die("License key is Suspended");
+                    break;
+                default:
+                    die("Invalid Response");
+                    break;
             }
-            break;
-        case "Invalid":
-            throw new Exception("License key is Invalid");
-        case "Expired":
-            throw new Exception("License key is Expired");
-        case "Suspended":
-            throw new Exception("License key is Suspended");
-        default:
-            throw new Exception("Invalid Response");
-    }
-}
 
-function shellasaservice_CreateAccount(array $params) {
-    try {
-        shellasaservice_validateLicense();
-        $config = shellasaservice_getConfig();
-        $output = shell_exec($config['createbash']);
-        logModuleCall('shellasaservice', __FUNCTION__, $params, $output);
-        return 'success';
+            $cmd=$params['configoption1']; 
+            $output = shell_exec($cmd);
+            logModuleCall('shellasaservice',__FUNCTION__,$params,$output);
+            if($output)
+            {
+                return 'success';
+            }
+
     } catch (Exception $e) {
-        logModuleCall('shellasaservice', __FUNCTION__, $params, $e->getMessage());
+        // Record the error in WHMCS's module log.
+        logModuleCall('shellasaservice',__FUNCTION__,$params,$e->getMessage(),$e->getTraceAsString());
         return $e->getMessage();
     }
+
+    return 'success';
 }
 
-function shellasaservice_SuspendAccount(array $params) {
-    try {
-        shellasaservice_validateLicense();
-        $config = shellasaservice_getConfig();
-        $output = shell_exec($config['suspendbash']);
-        logModuleCall('shellasaservice', __FUNCTION__, $params, $output);
-        return 'success';
-    } catch (Exception $e) {
-        logModuleCall('shellasaservice', __FUNCTION__, $params, $e->getMessage());
-        return $e->getMessage();
-    }
-}
-
-function shellasaservice_UnsuspendAccount(array $params) {
-    try {
-        shellasaservice_validateLicense();
-        $config = shellasaservice_getConfig();
-        $output = shell_exec($config['unsuspendbash']);
-        logModuleCall('shellasaservice', __FUNCTION__, $params, $output);
-        return 'success';
-    } catch (Exception $e) {
-        logModuleCall('shellasaservice', __FUNCTION__, $params, $e->getMessage());
-        return $e->getMessage();
-    }
-}
-
-function shellasaservice_TerminateAccount(array $params) {
-    try {
-        shellasaservice_validateLicense();
-        $config = shellasaservice_getConfig();
-        $output = shell_exec($config['terminatebash']);
-        logModuleCall('shellasaservice', __FUNCTION__, $params, $output);
-        return 'success';
-    } catch (Exception $e) {
-        logModuleCall('shellasaservice', __FUNCTION__, $params, $e->getMessage());
-        return $e->getMessage();
-    }
-}
-
-function shellasaservice_getConfig() {
-    $config = [];
-    $result = Capsule::table('tbladdonmodules')
-        ->where('module', 'shellasaservice')
-        ->get();
+function shellasaservice_SuspendAccount(array $params)
+{
+    try {   
+            $cmd=$params['configoption2']; 
+            $output = shell_exec($cmd);
+            logModuleCall('shellasaservice',__FUNCTION__,$params,$output);
+            if($output)
+            {
+                return 'success';
+            } 
         
-    foreach ($result as $row) {
-        $config[$row->setting] = $row->value;
+    } catch (Exception $e) {
+        // Record the error in WHMCS's module log.
+        logModuleCall('shellasaservice',__FUNCTION__,$params,$e->getMessage(),$e->getTraceAsString());
+        return $e->getMessage();
     }
-    
-    return $config;
+
+    return 'success';
+}
+
+function shellasaservice_UnsuspendAccount(array $params)
+{
+    try {
+            $cmd=$params['configoption3']; 
+            $output = shell_exec($cmd);
+            logModuleCall('shellasaservice',__FUNCTION__,$params,$output);
+            if($output)
+            {
+                return 'success';
+            } 
+    } catch (Exception $e) {
+        // Record the error in WHMCS's module log.
+        logModuleCall('shellasaservice',__FUNCTION__,$params,$e->getMessage(),$e->getTraceAsString());
+
+        return $e->getMessage();
+    }
+
+    return 'success';
+}
+
+function shellasaservice_TerminateAccount(array $params)
+{
+    try {
+            $cmd=$params['configoption4']; 
+            $output = shell_exec($cmd);
+            logModuleCall('shellasaservice',__FUNCTION__,$params,$output);
+            if($output)
+            {
+                return 'success';
+            } 
+    } catch (Exception $e) {
+        // Record the error in WHMCS's module log.
+        logModuleCall('shellasaservice',__FUNCTION__,$params,$e->getMessage(),$e->getTraceAsString());
+
+        return $e->getMessage();
+    }
+
+    return 'success';
 }
