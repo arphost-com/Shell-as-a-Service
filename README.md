@@ -4,7 +4,7 @@ https://arphost.com/index.php/store/whmcs-addons/shell-as-a-service
 
 Shell commands run as a service in WHMCS
 
-# For WHMCS 7.x
+# For WHMCS 8.x
 
 1. Extact shellasaservice-1.0.zip to shellaservice.
 
