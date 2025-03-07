@@ -6,7 +6,7 @@ Shell commands run as a service in WHMCS
 
 # For WHMCS 8.x
 
-1. Extact shellasaservice-1.0.zip to shellaservice.
+1. Extact zip to shellaservice.
 
 2. Upload shellasaservice to your addons folder under modules (modules/addons) in your whmcs directory.
 
